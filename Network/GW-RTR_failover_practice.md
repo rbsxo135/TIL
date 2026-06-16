@@ -11,12 +11,15 @@
 
 ## Failover
 - Core-RTR1 is down
+
     ![alt text](Packet_Tracer_Screenshots/Gateway_router_failover_after_failover.png)
     -> As we can see, connection to the Internet quickly, automatically was recovered
 - HSRP automatically activated CORE-RTR2(Router 3)
+
     ![alt text](Packet_Tracer_Screenshots/Gateway_router_failover_CORE-RTR2.png)
     -> CORE-RTR2 worked as a backup gateway router
 - OSPF automatically rerouted area 0
+
     ![alt text](Packet_Tracer_Screenshots/Gateway_router_failover_EDGE-RTR.png)
 
 ## Thoughts
