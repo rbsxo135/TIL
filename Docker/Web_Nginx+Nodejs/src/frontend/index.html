@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Nginx Reverse Proxy Demo</title>
+  <style>
+    body { font-family: Arial; max-width: 800px; margin: 50px auto; }
+    .card { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    pre { background: #333; color: #0f0; padding: 15px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🐳 Nginx Reverse Proxy Demo</h1>
+  
+  <div class="card">
+    <h3>API 테스트</h3>
+    <button onclick="fetchAPI('/api/health')">헬스체크</button>
+    <button onclick="fetchAPI('/api/users')">사용자 목록</button>
+    <button onclick="fetchAPI('/api/products')">제품 목록</button>
+  </div>
+  
+  <div class="card">
+    <h3>응답 결과</h3>
+    <pre id="result">버튼을 클릭하세요...</pre>
+  </div>
+
+  <script>
+    async function fetchAPI(endpoint) {
+      try {
+        const res = await fetch(endpoint);
+        const data = await res.json();
+        document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        document.getElementById('result').textContent = 'Error: ' + e.message;
+      }
+    }
+  </script>
+</body>
+</html>

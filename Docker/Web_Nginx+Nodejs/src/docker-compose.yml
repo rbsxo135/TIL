@@ -1,0 +1,61 @@
+services:
+  backend1:
+    build: ./backend1
+    container_name: backend1
+    networks:
+      - app-network
+    # 내부 통신만 사용, 외부 포트 노출 안 함
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  backend2:
+    build: ./backend2
+    container_name: backend2
+    networks:
+      - app-network
+    # 내부 통신만 사용, 외부 포트 노출 안 함
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  backend3:
+    build: ./backend3
+    container_name: backend3
+    networks:
+      - app-network
+    # 내부 통신만 사용, 외부 포트 노출 안 함
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
