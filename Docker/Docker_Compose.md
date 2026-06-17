@@ -5,8 +5,9 @@
 
 ## Configure
 - Must Configure **docker-compose.yml**
+	- yaml file don't allow **tab**, must use **spacebar**!
     - We can list Docker containers under "service:" section
-    - Configure image, volume, depend, port, enviornment
+    - Configure image, volume, depend, port, enviornment, ...
 - "docker compose" commands always searchs **current working diredtory**
     -> docker-compose.yml file **must be in current working directory**
 
