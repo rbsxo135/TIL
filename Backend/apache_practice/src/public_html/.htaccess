@@ -1,0 +1,14 @@
+# Enable URL rewrite
+RewriteEngine On
+
+# Domain name without 'www'
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+# security header
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+
+# Disable Directory Catalog
+Options -Indexes
