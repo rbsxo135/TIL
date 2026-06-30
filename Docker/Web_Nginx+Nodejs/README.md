@@ -1,4 +1,4 @@
-# Webserver with Docker - Nginx reverse proxy & Node.js backend
+# Webserver with Docker - Nginx reverse proxy & Node.js backend  
 
 ## Concept
 - Make webserver running on Docker container
@@ -11,6 +11,6 @@
     - Express API
     - expose port 3000
 	- Every backend node is made from src/backend/
-		-> give environment varient to each nodes to distinguish them
+		&rightarrow; give environment varient to each nodes to distinguish them
 - Redis Cache DB
 	- Persistance enabled(appendonly=yes)

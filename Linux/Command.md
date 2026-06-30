@@ -1,3 +1,3 @@
 ## Network Management
 - netstat -ntlp
-    -> Track listening port
+    &rightarrow; Track listening port

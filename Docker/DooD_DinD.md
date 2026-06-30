@@ -1,5 +1,4 @@
-# DooD(Docker-out-of-Docker) vs DinD(Docker-in-Docker)
-
+# DooD(Docker-out-of-Docker) vs DinD(Docker-in-Docker)  
 
 ## Concept
 - DooD

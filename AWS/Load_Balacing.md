@@ -1,4 +1,4 @@
-# Load Balancing
+# Load Balancing  
 
 ## Concept
 - Distribute network traffic to multiple instances
@@ -16,7 +16,7 @@
 - 3 modes that ELB could be run  
 	&rightarrow; ALB, NLB, CLB
 
-## ALB(Application Load Balacer)
+## ALB(Application Load Balancer)
 - Working on Applicaiton Layer(L7)
 - HTTP, HTTPS load balancing
 - Load balance upon services

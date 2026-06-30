@@ -1,5 +1,4 @@
-# Docker Image
-
+# Docker Image  
 
 ## Concept
 - Compressed image of **Container**
@@ -23,8 +22,8 @@
 	- ENTRYPOINT: Container runs the command that given to the "docker build" command. ENTRYPOINTS gives arguments/commands for that command. 
 	- ONBUILD: If an Docker image built with ONBUILD commands, other Dockerfile use that image runs those commands while building
 	- HEALTHCHECK: Set --interval --timeout --retries for health check
-	- Commands given not in array -> "/bin/bash -c" before the command
-	  Commands given in array -> only that command deliver to the container	
+	- Commands given not in array &rightarrow; "/bin/bash -c" before the command
+	  Commands given in array &rightarrow; only that command deliver to the container	
 
 ## Docker commit
 - Build Docker image from **running container**

@@ -1,5 +1,4 @@
-# GitLab
-
+# GitLab  
 
 ## Concept
 - Connected with github name and email
@@ -37,4 +36,4 @@
 - Useful than Github in situation that **CI/CD** is important
 - We can put multiple Gitlab-runner for large scale CI/CD
 - Tag is useful when a project is consist of various services.  
-	&rigthearrow; Since there is no project with single service, tagging is necessary. 
+	&rightarrow; Since there is no project with single service, tagging is necessary. 
