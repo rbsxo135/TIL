@@ -10,7 +10,7 @@
 ## Configure
 - Launch Template
     - Launch template needs an EC2 image as a base of instance
-    - EC2 image can be selected from AMI or genereated from running instance
+    - EC2 image can be selected from AMI
     - Security group, key pair, instance type &rightarrow; also needed to be configured
     - Thesedays, launch template is **only for auto scaling group**  
         &rightarrow; Subnet, AZ should not be selected  
@@ -30,6 +30,20 @@
     - Predictive Scaling
         - AWS analyzes CloudWatch data  
             &rightarrow; Predict traffic and proactively scale-out/scale-in
+
+## ELB + EC2 Auto Scaling Pracitce Troubleshooting
+- After configured EC2 Auto scaling group with ELB healthcheck enabled, a problem happened  
+    &rightarrow; Instances kept creating and terminating since healthcheck failed
+- I found that I misconfigured healthcheck API. So I fixed it and recreated AMI  
+    &rightarrow; The problem was unsolved
+- I put both a test instance and an instance created by auto scaling, then I found healthcheck of the test instance succeeded  
+    &rightarrow; I scoped down that the problem was come from auto scaling group
+- I found that a wrong AMI image was selected for the launch template...  
+    &rightarrow; After fixing it, the problem was solved
+- From this troubleshooting
+    - I think that it was a pretty good choice to put a updated instance into a target group to check whether the auto scaling group was working well
+    - A tiny misconfiguration can affect the whole system  
+        &rightarrow; We need a good CI/CD!!
 
 ## Thoughts
 - Under micro-service architecture, many services are configured with ECS, EKS  
