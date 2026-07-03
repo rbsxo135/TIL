@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배포 테스트 성공!</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        h1 {
+            color: #2ecc71;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #e8f8f5;
+            color: #1abc9c;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🚀 Deployment Success!</h1>
+        <p>GitLab ➔ S3 ➔ AWS CodeDeploy ➔ EC2 파이프라인이 정상적으로 동작했습니다.</p>
+        <div class="badge">Nginx Web Server Running</div>
+    </div>
+
+</body>
+</html>
