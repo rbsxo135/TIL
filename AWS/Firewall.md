@@ -17,10 +17,10 @@
 - CloudWatch Alert Logs not populated after shifting to Custom Rules
     - Cause: Catch-all `IP ANY ANY -> Pass` rule suppressed `Alert` actions due to Suricata's default `Action Order` priority
     - Resolution: Removed the explicit `Pass` rule and delegated traffic forwarding to the policy's **Default Action**
-- Issue 2: Rules failed to catch targeted Web (HTTP) and OpenVPN traffic
+- Rules failed to catch targeted Web (HTTP) and OpenVPN traffic
     - Cause: Misconfigured Port Mapping. Server listening ports (`80`, `1194`) were incorrectly set as **Source Port** instead of **Destination Port**
     - Resolution: Changed to **Source Port: ANY** and **Destination Port: 80 / 1194**
-- Issue 3: ALB Inbound Web requests were missing in logs
+- ALB Inbound Web requests were missing in logs
     - Cause: ALB terminates the initial client TCP session as a reverse proxy. Strict "Application Layer Only Alert" skipped log generation during the proxy handoff
     - Resolution: Adjusted policy alert settings to a broader scope (e.g., `ALERT_ALL`) to log initial TCP SYN handshakes
 
