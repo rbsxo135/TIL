@@ -1,0 +1,112 @@
+# ============================================================
+# TechFlow App - GitLab CI/CD (EC2 자체 구축, v3)
+# 흐름: build → test → package(도커 이미지) → deploy(SSH)
+# ============================================================
+
+stages:
+  - build
+  - test
+  - package
+  - deploy
+
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  IMAGE_LATEST: $CI_REGISTRY_IMAGE:latest
+  CONTAINER_NAME: techflow-app
+
+default:
+  image: node:20-alpine
+
+# ---------------- BUILD ----------------
+build:
+  stage: build
+  cache:
+    key:
+      files:
+        - package-lock.json      # ← 커밋된 lock 필요(Step 6-1)
+    paths:
+      - node_modules/
+  script:
+    - npm ci                     # lock 기반 정확 설치
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 hour
+
+# ---------------- TEST ----------------
+unit-test:
+  stage: test
+  needs: ["build"]
+  script:
+    - npm test
+
+lint:
+  stage: test
+  needs: ["build"]
+  script:
+    - npm run lint
+
+# ---------------- PACKAGE (dind + insecure registry) ----------------
+docker-build:
+  stage: package
+  image: docker:27
+  services:
+    - name: docker:27-dind
+      command: ["--insecure-registry=54.46.20.81:5050"]   # ⚠️ 자체 HTTP 레지스트리 허용
+  variables:
+    DOCKER_HOST: tcp://docker:2375        # dind 데몬 주소
+    DOCKER_TLS_CERTDIR: ""          # dind TLS 인증서 경로
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  script:
+    - docker build -t "$IMAGE_TAG" -t "$IMAGE_LATEST" .
+    - docker push "$IMAGE_TAG"
+    - docker push "$IMAGE_LATEST"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+# ---------------- DEPLOY 공통 템플릿 ----------------
+.deploy_base:
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - cat "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+    - echo "" >> ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - |
+      ssh -i ~/.ssh/id_ed25519 "$DEPLOY_USER@$DEPLOY_HOST" bash -s <<REMOTE
+      set -e
+      echo "$DEPLOY_TOKEN" | docker login "$CI_REGISTRY" -u "$DEPLOY_TOKEN_USER" --password-stdin
+      docker pull "$IMAGE_TAG"
+      docker rm -f $CONTAINER_NAME 2>/dev/null || true
+      docker run -d --name $CONTAINER_NAME --restart always -p 127.0.0.1:3000:3000 -e APP_VERSION=$CI_COMMIT_SHORT_SHA "$IMAGE_TAG"
+      docker image prune -f
+      REMOTE
+
+# ---------------- DEPLOY: 스테이징 자동 ----------------
+deploy-staging:
+  extends: .deploy_base
+  stage: deploy
+  needs: ["docker-build"]
+  environment:
+    name: staging
+    url: http://$DEPLOY_HOST
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+# ---------------- DEPLOY: 운영 수동 승인 ----------------
+deploy-production:
+  extends: .deploy_base
+  stage: deploy
+  needs: ["deploy-staging"]
+  environment:
+    name: production
+    url: http://$DEPLOY_HOST
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: manual
+      allow_failure: false

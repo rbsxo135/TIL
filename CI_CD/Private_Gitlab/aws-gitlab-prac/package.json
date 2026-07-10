@@ -1,0 +1,17 @@
+{
+  "name": "techflow-app",
+  "version": "1.0.0",
+  "description": "TechFlow demo app for GitLab CI/CD",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "jest --ci",
+    "lint": "eslint src test"
+  },
+  "dependencies": { "express": "^4.19.2" },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
