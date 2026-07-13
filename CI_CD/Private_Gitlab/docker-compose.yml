@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  web:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: '192.168.230.145' 
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://192.168.230.145' 
+        registry_external_url 'http://192.168.230.145:5050'
+        gitlab_rails['registry_enabled'] = true
+    ports:
+      - '80:80'
+      - '443:443'
+      - '2424:22'
+      - '5050:5050'
+    volumes:
+      - './config:/etc/gitlab'
+      - './logs:/var/log/gitlab'
+      - './data:/var/opt/gitlab'
+    networks:
+      - gitlab-net
+
+networks:
+  gitlab-net:
+    driver: bridge
