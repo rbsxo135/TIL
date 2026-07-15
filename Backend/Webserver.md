@@ -12,6 +12,12 @@
 - Possess less memory
 - Static content, **Reverse Proxy**
 
+## Nodejs
+- Event-driven, Non-blocking I/O model
+- Powerful in the environment that handles many concurrent connections with lightweight tasks (e.g., Real-time chat, API server)
+- Single-threaded event loop architecture
+- JavaScript on the server-side
+
 ## Virtual Host
 - Allow a single server to run multiple 
 
