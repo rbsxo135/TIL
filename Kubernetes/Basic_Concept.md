@@ -23,19 +23,19 @@
 ## Kubernetes Architecture
 ![alt text](images/k8s_basic_concept_architecture.png)
 - Control plane
-    - kube-apiserver
+    - kube-apiserver  
     Every component of k8s communicates via API  
     &rightarrow; kubectl / controller / kubelet send API to this server
-    - etcd
+    - etcd  
     Save state of the cluster in key-value way
-    - kube-scheduler
+    - kube-scheduler  
     Allocate a pod to a proper worker nod
-    - kube-controller-manager
+    - kube-controller-manager  
     Manage controllers that conconsile the cluster
 - Data plane
-    - kubelet
+    - kubelet  
     Send API information to control plane api server(status of the worker node)
-    - kube-proxy
+    - kube-proxy  
     Manage iptables/ipvs of the worker node
     - container runtime(ex. containerd)
 
