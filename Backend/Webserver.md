@@ -18,6 +18,12 @@
 - Single-threaded event loop architecture
 - JavaScript on the server-side
 
+## Express
+- Minimal and flexible **web framework for Node.js**
+- Middleware-based architecture
+- Routing and REST API development
+- Static file serving
+
 ## Virtual Host
 - Allow a single server to run multiple 
 
