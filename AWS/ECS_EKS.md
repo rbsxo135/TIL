@@ -31,6 +31,19 @@
 - Managed Control Plane with flexible Data Plane options
 - Basically AWS handles the control plane but we can make bastion host or OpenVPN server and directly access to the cluster
 
+## Simple ECS Clustering Practice
+- Use a wordpress container image to provide a web service
+- Pull a wordpress image from Dockerhub, tag and push it to ECR
+- Configure a task definition
+    - Launch type is **EC2 instance**  
+        &rightarrow; For load balancing, it is neccesary to configure **ELB** and **Target Group**
+    - Allocate resource of EC2 to containers that will be launched
+    - Configure container definitions(equivalent to docker run options)
+- Create a service
+    - Use the tesk definition that configured previous step
+    - Set rolling update for deployment option
+- After EC2 instances created, we need to register them into target group
+
 ## Thought
 - ECS is more lighter than EKS when we configure a cluster
 - Since EKS is based on the kubernetes engine, it works same way in other cloud platform  
