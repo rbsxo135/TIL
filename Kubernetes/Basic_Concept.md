@@ -1,4 +1,4 @@
-# Basic Concept
+# Kubernetes Basic Concept
 
 ## Concept
 - Multi-container orchestration platform
@@ -29,7 +29,7 @@
     - etcd  
     Save state of the cluster in key-value way
     - kube-scheduler  
-    Allocate a pod to a proper worker nod
+    Allocate a pod to a proper worker node
     - kube-controller-manager  
     Manage controllers that conconsile the cluster
 - Data plane
@@ -42,5 +42,5 @@
 ## Thought
 - k8s has many components  
     &rightarrow; Which means a lot of things to check when we do troubleshooting
-- I need to focus on it is divided in control plane and data plane  
+- I need to focus on that it is divided in control plane and data plane  
     &rightarrow; What control plane does is keep reconciling!, it is not propoer to directly access the worker node and fix it when we do troubleshooting
